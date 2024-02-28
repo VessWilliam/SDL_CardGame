@@ -11,7 +11,9 @@ int main(int argc, char *args[])
      try
      {
        GameEngine gameEngine(SCREEN_W,SCREEN_H);
-
+       
+       gameEngine.loadImage();
+       
        gameEngine.RunGameScreen();
 
        gameEngine.CleanUp();
