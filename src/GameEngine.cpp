@@ -17,35 +17,35 @@ GameEngine::~GameEngine()
     CleanUp();
 }
 
-GameEngine::GameEngine(int S_Width, int S_Height)
-    : e_ScreenWidth(S_Width),
-      e_ScreenHeight(S_Height),
-      e_Window(nullptr),
-      e_Render(nullptr),
-      e_ImageTexture(nullptr),
+GameEngine::GameEngine(int ScreenWidth, int ScreenHeight)
+    : gameEngineScreenWidth(ScreenWidth),
+      gameEngineScreenHeight(ScreenHeight),
+      gameEngineWindow(nullptr),
+      gameEngineRender(nullptr),
+      gameEngineImageTexture(nullptr),
       running(false)
 {
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
         ErrorMessage::showSDlError("SDL_init Message ");
 
-    e_Window = SDL_CreateWindow(
+    gameEngineWindow = SDL_CreateWindow(
         "First SDL",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
-        e_ScreenWidth,
-        e_ScreenHeight,
+        gameEngineScreenWidth,
+        gameEngineScreenHeight,
         SDL_WINDOW_SHOWN);
 
-    if (e_Window == NULL)
+    if (gameEngineWindow == NULL)
         ErrorMessage::showSDlError("Fail Create Window ");
 
-    e_Render = SDL_CreateRenderer(
-        e_Window,
+    gameEngineRender = SDL_CreateRenderer(
+        gameEngineWindow,
         -1,
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    if (e_Render == NULL)
+    if (gameEngineRender == NULL)
         ErrorMessage::showSDlError("Fail Create Render ");
 
     int ImageFlags = IMG_INIT_PNG;
@@ -58,21 +58,21 @@ GameEngine::GameEngine(int S_Width, int S_Height)
 
 void GameEngine::CleanUp()
 {
-    if (e_Render != NULL)
+    if (gameEngineRender != NULL)
     {
-        SDL_DestroyRenderer(e_Render);
-        e_Render = NULL;
+        SDL_DestroyRenderer(gameEngineRender);
+        gameEngineRender = NULL;
     }
-    if (e_Window != NULL)
+    if (gameEngineWindow != NULL)
     {
-        SDL_DestroyWindow(e_Window);
-        e_Window = NULL;
+        SDL_DestroyWindow(gameEngineWindow);
+        gameEngineWindow = NULL;
     }
 
-    if (e_ImageTexture != NULL)
+    if (gameEngineImageTexture != NULL)
     {
-        SDL_DestroyTexture(e_ImageTexture);
-        e_ImageTexture = NULL;
+        SDL_DestroyTexture(gameEngineImageTexture);
+        gameEngineImageTexture = NULL;
     }
 
     if (SDL_WasInit(SDL_INIT_VIDEO))
@@ -83,26 +83,26 @@ void GameEngine::CleanUp()
 
 void GameEngine::Render()
 {
-    SDL_SetRenderDrawColor(e_Render, 0xf, 0xff, 0xff, 0xff);
-    SDL_RenderClear(e_Render);
+    SDL_SetRenderDrawColor(gameEngineRender, 0xf, 0xff, 0xff, 0xff);
+    SDL_RenderClear(gameEngineRender);
 
-    SDL_RenderCopy(e_Render, e_ImageTexture, NULL, NULL);
+    SDL_RenderCopy(gameEngineRender, gameEngineImageTexture, NULL, NULL);
 
-    SDL_RenderPresent(e_Render);
+    SDL_RenderPresent(gameEngineRender);
 }
 
 void GameEngine::loadImage()
 {
 
-    e_Surface = IMG_Load("res/Cards/cardBack_green2.png");
-    if (e_Surface == NULL)
+    gameEngineSurface = IMG_Load("res/Cards/cardBack_green2.png");
+    if (gameEngineSurface == NULL)
         ErrorMessage::showSDlError("Unable to load image!");
 
-    e_ImageTexture = SDL_CreateTextureFromSurface(e_Render, e_Surface);
-    if (e_ImageTexture == NULL)
+    gameEngineImageTexture = SDL_CreateTextureFromSurface(gameEngineRender, gameEngineSurface);
+    if (gameEngineImageTexture == NULL)
         ErrorMessage::showSDlError("Unable to create texture from image!");
 
-    SDL_FreeSurface(e_Surface);
+    SDL_FreeSurface(gameEngineSurface);
 }
 
 void GameEngine::EventHandle()

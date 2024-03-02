@@ -1,1 +1,2 @@
+# Ignore compiled object files
 .vscode/c_cpp_properties.json

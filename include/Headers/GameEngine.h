@@ -19,11 +19,12 @@ public:
 private:
 
     bool running;
-    const int e_ScreenWidth , e_ScreenHeight;
+    const int gameEngineScreenWidth , gameEngineScreenHeight;
 
-    SDL_Window*  e_Window;
-    SDL_Renderer* e_Render;
+    SDL_Window*  gameEngineWindow;
+    SDL_Renderer* gameEngineRender;
 
-    SDL_Texture* e_ImageTexture; 
-    SDL_Surface* e_Surface;
+    SDL_Texture* gameEngineImageTexture; 
+    SDL_Surface* gameEngineSurface;
+
 };

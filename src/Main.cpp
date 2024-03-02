@@ -3,7 +3,7 @@
 #include <GameEngine.h>
 
 using namespace std;
-const int SCREEN_W = 800, SCREEN_H = 600;
+const int SCREEN_W = 1000, SCREEN_H = 700;
 
 int main(int argc, char *args[])
 {
